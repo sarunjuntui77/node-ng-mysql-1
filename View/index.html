@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+body{
+	overflow-x: hidden;
+	margin: 2%;
+}
+.form_modal{
+	position: fixed;
+	background-color: #DDDDDD;
+	margin-top: 10%;
+	margin-right: 10%;
+	margin-left: 10%;
+	text-align: center;
+	padding: 2%;
+	width: 79%;
+}
+
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<title>Node.js & Express.js & Angular.js & MySQL => MVC</title>
+</head>
+<script src="../Controller/index_controller.js"></script>	
+<body ng-app="app"  ng-controller="productsTable">
+
+
+<div ng-show="wait" style="position: fixed;margin-left:45%;margin-top:20%">
+<button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</button>
+</div>
+<div class="row" ng-show="main"  style="margin:1%;" >
+<h1> Node.js & Express.js & Angular.js & MySQL => MVC </h1>
+	<div class="col-md-12" >
+		<table class="table table-bordered" style="width:100%;">
+			<thead>
+				<tr>
+					<td colspan="7" >
+					<div class="form-inline"><label for="search">Quick-Search</label>
+					<input ng-model="searchText" ng-change="search()" type="text" id="search" name="search" style="width:200px" class="form-control">
+					
+					<button ng-click="showModal()"  class="btn btn-default">Insert Product</button><button ng-show="user_session" ng-click="logout()" class="btn btn-default">Log out</button></div>
+					<div ng-hide="user_session">
+					<form class="form-inline" ng-submit="login_submit()">
+					  <div class="form-group">
+					    <label for="Username">Username</label>
+					    <input type="text" class="form-control" ng-model="login.username" placeholder="Username">
+					  </div>
+					  <div class="form-group">
+					    <label for="Password">Password</label>
+					    <input type="password" class="form-control" ng-model="login.password" placeholder="Password">
+					  </div>
+					  <button type="submit" class="btn btn-default">Login</button>
+					</form>
+					</div>
+					</td>
+				</tr>
+				<tr style ="text-align:center">
+					<td style="width:10%">Number</td>
+					<td style="width:10%">Product_Code</td>
+					<td style="width:25%">Name</td>
+					<td style="width:10%">Price</td>
+					<td style="width:15%">Category</td>
+					<td style="width:15%">Suppilers</td>
+					<td style="width:15%">ลบ</td>
+				</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(key, product) in products">
+				<td style ="text-align:center">{{key+1}}</td>
+				<td style ="text-align:left">{{product.product_code}}</td>
+				<td style ="text-align:left">{{product.product_name}}</td>
+				<td style ="text-align:right">{{product.list_price}}</td>
+				<td style ="text-align:left">{{product.category}} </td>
+				<td style ="text-align:left">{{product.first_name}} {{product.last_name}}</td>
+				<td style ="text-align:center">	
+				<button id="{{product.product_id}}" ng-click="edit_product($event)"   class="btn btn-default">EDIT</button>
+				<button id="{{product.product_id}}" ng-show="user_session"; ng-click="delete_product($event)"   class="btn btn-default">DELETE</button></td>
+			</tr>
+		</tbody>
+	</div>
+</table>
+</div>
+<!-- ------------------------HIDDEN ELEMENT------------------------------ -->
+
+<div   ng-show="formModal" class ="form_modal">
+<span ng-click="formModal = false" class="close">x</span>
+<table style="width:100%">					   	
+<form  class="form-inline"  ng-submit="form_submit()">
+<tr >
+<td style="width:33.33%">
+  <div class="form-group">
+    <label for="name">Product Name</label>
+    <input type="text" class="form-control" name="name" id="name" placeholder="Product Name"	  ng-model="form_products.product_name">
+  </div>
+</td>
+<td style="width:33.33%">
+  <div class="form-group">
+    <label for="product_code">Product Code</label>
+    <input type="text" class="form-control" name="product_code" id="product_code" placeholder="Product Code" 	  ng-model="form_products.product_code">
+  </div>
+</td>
+<td style="width:33.34%">
+  <div class="form-group">
+    <label for="cost">Standard Cost</label>
+    <input type="number" class="form-control" name="cost" id="cost" placeholder="Standard Cost" 	  ng-model="form_products.standard_cost" step="0.01">
+  </div>
+</td>
+</tr>
+
+<tr>
+<td>
+  <div class="form-group">
+    <label for="price">List Price</label>
+    <input type="number" class="form-control" name="price" id="price" placeholder="List Price"   ng-model="form_products.list_price" step="0.01">
+  </div>
+</td>
+<td>
+  <div class="form-group">
+    <label for="reorder">Reorder Level</label>
+    <input type="number" class="form-control" name="reorder" id="reorder" placeholder="Reorder Level"  ng-model="form_products.reorder_level">
+  </div>
+</td>
+<td>
+  <div class="form-group">
+    <label for="mini_reorder">Minimum Reorder Level</label>
+    <input type="number" class="form-control" name="mini_reorder" id="mini_reorder" placeholder="Minimum Reorder Level"  ng-model="form_products.minimum_reorder_quantity">
+  </div>
+</td>
+</tr>
+
+<tr>
+<td>
+  <div class="form-group">
+    <label for="category">Category</label>
+    <input type="text" class="form-control" name="category" id="category" placeholder="Category"  ng-model="form_products.category">
+  </div>
+</td>
+<td>  
+  <div class="form-group">
+    <label for="target">Target Level</label>
+    <input type="number" class="form-control" name="target" id="target" placeholder="Target Level"  ng-model="form_products.target_level">
+  </div>
+</td>
+<td>
+  <div class="form-group">
+    <label for="quantity">Quantity</label>
+    <input type="text" class="form-control"  name="quantity"  id="quantity" placeholder="Quantity"  ng-model="form_products.quantity_per_unit">
+  </div>
+</td>
+</tr>
+
+<tr>
+<td>
+  <div class="form-group">
+    <label for="discontinued">Discontinued</label>
+    <input type="text" class="form-control" name="discontinued" id="discontinued" placeholder="Discontinued"  ng-model="form_products.discontinued">
+  </div>
+</td>
+<td colspan="2">
+  <div class="form-group">
+    <label for="discontinued">Suppilers</label>
+   <select ng-model="form_products.supplier_id" id="supplier_id" class="form-control" 
+    ng-options="supplier.company for supplier in suppliers track by supplier.supplier_id">
+    </select>
+    
+  </div>
+</td>
+
+<tr>
+	<td style="text-align:left">
+    <button type="submit" ng-show="add_button" class="btn btn-default">ADD</button>
+	<button type="submit" ng-hide="add_button" class="btn btn-default">SAVE</button>
+	</td>
+</tr>
+
+</tr>
+</form>
+</table>		
+</div>
+
+
+</body>
+</html>
