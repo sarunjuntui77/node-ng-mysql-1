@@ -29,10 +29,17 @@ connection.connect((err)=> {
   	console.log("Connect MySQL");
   }
 });
-app.listen(3000,(a)=>{
+app.listen(1711,(a)=>{
     console.log("App listening on port 3000");
  
  });
 let dirName = __dirname;
-require(__dirname+'/Model/index_model.js')(app,dirName,connection,session);
+
+function cors(res){
+res.header("Content-Type", "application/json; charset=utf-8");
+res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+res.header("Access-Control-Allow-Origin", "*");
+}
+
+require(__dirname+'/Model/index_model.js')(app,dirName,connection,session,cors);
 app.use(express.static(__dirname+'/'));    

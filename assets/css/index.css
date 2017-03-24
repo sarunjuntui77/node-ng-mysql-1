@@ -1,0 +1,19 @@
+body{
+	overflow-x: hidden;
+	margin: 2%;
+}
+.form_modal{
+	position: fixed;
+	background-color: #DDDDDD;
+	top: 10%;
+	left: 10%;
+	text-align: center;
+	padding: 2%;
+	width: 79%;
+	transition: 0.5s;
+
+}
+.form_modal.ng-hide {
+  opacity: 0;
+  top: 30%;
+}

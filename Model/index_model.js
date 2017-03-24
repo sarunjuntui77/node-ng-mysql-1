@@ -1,4 +1,4 @@
-module.exports = (app,dirName,con,session)=>{
+module.exports = (app,dirName,con,session,cors)=>{
 app.get('/', (req, res) => {
     res.render(dirName+'/View/index');        
 });
@@ -40,6 +40,7 @@ app.get('/search/:text', (req, res) => {
 	});    
 });
 app.get('/get_all_products', (req, res) => {
+	cors(res);
 	let sql ="SELECT * FROM products "
 	+"INNER JOIN suppliers ON suppliers.supplier_id = products.supplier_id ORDER BY product_id DESC";
 	
