@@ -1,6 +1,5 @@
 body{
 	overflow-x: hidden;
-	margin: 2%;
 }
 .form_modal{
 	position: fixed;
@@ -9,7 +8,7 @@ body{
 	left: 10%;
 	text-align: center;
 	padding: 2%;
-	width: 79%;
+	width: 80%;
 	transition: 0.5s;
 
 }

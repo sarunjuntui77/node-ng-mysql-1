@@ -30,15 +30,17 @@ connection.connect((err)=> {
   }
 });
 app.listen(1711,(a)=>{
-    console.log("App listening on port 3000");
+    console.log("App listening on port 1711");
  
  });
 let dirName = __dirname;
 
 function cors(res){
 res.header("Content-Type", "application/json; charset=utf-8");
-res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
 res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Methods", "POST, GET,OPTIONS");
+res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
+
 }
 
 require(__dirname+'/Model/index_model.js')(app,dirName,connection,session,cors);

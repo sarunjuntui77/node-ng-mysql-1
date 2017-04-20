@@ -1,5 +1,6 @@
 module.exports = (app,dirName,con,session,cors)=>{
 app.get('/', (req, res) => {
+	
     res.render(dirName+'/View/index');        
 });
 app.get('/get_session', (req, res) => {
