@@ -1,15 +1,32 @@
 {
-  "name": "node-todo",
-  "version": "0.0.0",
-  "description": "Simple todo application.",
+  "name": "node-ng-mysql-1",
+  "version": "1.0.0",
+  "description": "Node.js Angular.js Mysql Express.js",
   "main": "server.js",
-  "author": "Scotch",
   "dependencies": {
-    "body-parser": "^1.4.3",
     "bootstrap": "^3.3.7",
-    "express": "^4.13.4",
-    "method-override": "^2.1.3",
-    "morgan": "^1.1.1",
-    "mysql": "^2.11.1",
-  }
+    "ejs": "^2.5.2",
+    "express-session": "^1.15.3",
+    "html": "^1.0.0",
+    "mysql": "^2.11.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm start",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarunjuntui77/node-ng-mysql-1.git"
+  },
+  "keywords": [
+    "Angularjs",
+    "MySql"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarunjuntui77/node-ng-mysql-1/issues"
+  },
+  "homepage": "https://github.com/sarunjuntui77/node-ng-mysql-1#readme"
 }
